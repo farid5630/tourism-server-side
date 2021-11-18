@@ -60,6 +60,33 @@ async function run() {
             res.json(result);
         })
 
+        // my order get
+        app.get("/myOrders/:email", async(req, res) => {
+            const email = req.params.email;
+            const result = await orderCollection.find({email}).toArray();
+           res.send(result);
+        })
+
+        // delete Order
+        app.delete("/cancel/:id", async(req, res) => {
+            const id = req.params.id;
+            const result = await orderCollection.deleteOne({_id:ObjectId(id)});
+            res.send(result);
+        })
+
+        // manage orders get 
+        app.get("/allOrders", async(req, res) => {
+            const result = await orderCollection.find({}).toArray();
+           res.send(result);
+        })
+
+        // manage order delete
+        app.delete("/allOrders/:id", async(req, res) => {
+            const id = req.params.id;
+            const result = await orderCollection.deleteOne({_id:ObjectId(id)});
+            res.send(result);
+        })
+
     }
     finally {
         // await client.close();
